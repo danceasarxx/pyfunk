@@ -1,0 +1,13 @@
+# Python compile files
+*.pyc
+
+# Project files
+.python-version
+.anaconda
+pyfunk.sublime-*
+
+# Builds
+.cache
+*.egg-info
+dist/
+build/
