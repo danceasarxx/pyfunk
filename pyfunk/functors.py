@@ -19,7 +19,7 @@ def maybify(nullify, f):
     misc.F if there is no need to nonify.
     @sig maybify :: (a -> Bool) -> (a -> b) -> (a -> Maybe b)
     '''
-    return _.compose(lambda a: Maybe.of(None if nullify(a) else a))
+    return _.compose(lambda a: Maybe.of(None if nullify(a) else a), f)
 
 
 @_.curry
@@ -98,7 +98,7 @@ class Container(object):
         Transforms the value of the container using a function to a monad
         @sig chain :: Container a -> (a -> Container b) -> Container b
         '''
-        return self.fmap(fn).join
+        return self.fmap(fn).join()
 
 
 class Left(object):
@@ -128,14 +128,13 @@ class Left(object):
     def join(self):
         '''
         Lifts a Left monad out of another
-        @sig join :: Left l => l l -> c a
+        @sig join :: Left l => _ -> Left
         '''
-        return self._value
+        return self
 
     def chain(self, fn):
         '''
-        Transforms the value of the Left monad using a function to
-        a monad
+        Does the same as join
         @sig chain :: Left -> (a -> Left) -> Left
         '''
         return self.fmap(fn).join()
