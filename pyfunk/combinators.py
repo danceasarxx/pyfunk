@@ -26,6 +26,6 @@ def compose(*fns):
 def fnot(f):
     '''
     Creates a function that negates the result of the predicate.
-    @sig fnot :: (a -> Bool) -> a -> Bool
+    @sig fnot :: (a -> Bool) -> * -> Bool
     '''
-    return lambda a: not f(a)
+    return lambda *args: not f(*args)
