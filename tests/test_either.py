@@ -1,4 +1,4 @@
-from pyfunk.functors import Left, Right, either
+from pyfunk.functors.either import Left, Right, Either
 from pyfunk.misc import fid
 
 
@@ -29,7 +29,7 @@ def test_chain():
 
 def test_either():
     g1 = getT(3)
-    assert either(fid, lambda x: x/2, g1) == 'Must be more than 10'
+    assert Either.either(fid, lambda x: x/2, g1) == 'Must be more than 10'
 
     g2 = getT(11)
-    assert either(lambda x: x * 2, lambda x:  x/2, g2) == 11
+    assert Either.either(lambda x: x * 2, lambda x:  x/2, g2) == 11

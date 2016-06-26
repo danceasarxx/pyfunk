@@ -1,4 +1,4 @@
-from pyfunk.functors import Maybe, maybe, maybify
+from pyfunk.functors.maybe import Maybe
 from pyfunk.misc import F
 
 
@@ -26,11 +26,11 @@ def test_chain():
 
 
 def test_maybe():
-    assert maybe(3, lambda x: x * 4, Maybe.of(3)) == 12
-    assert maybe(3, lambda x: x * 4, Maybe.of(None)) == 3
+    assert Maybe.maybe(3, lambda x: x * 4, Maybe.of(3)) == 12
+    assert Maybe.maybe(3, lambda x: x * 4, Maybe.of(None)) == 3
 
 
 def test_maybify():
-    fn = maybify(F)(lambda x: None if x > 2 else x)
+    fn = Maybe.maybify(F)(lambda x: None if x > 2 else x)
     assert isinstance(fn(1), Maybe)
     assert fn(12).nothing()

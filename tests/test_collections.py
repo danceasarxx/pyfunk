@@ -1,5 +1,5 @@
 from pyfunk import collections as _
-from pyfunk.functors import Maybe, maybe
+from pyfunk.functors.maybe import Maybe
 from pyfunk.misc import fid, T
 
 
@@ -13,7 +13,7 @@ def test_fmap():
     assert aresult[1] == 4
 
     mresult = _.fmap(lambda x: x * 2, Maybe.of(1))
-    mvalue = maybe(None, fid, mresult)
+    mvalue = Maybe.maybe(None, fid, mresult)
     assert mvalue == 2
 
 

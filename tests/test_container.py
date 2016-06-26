@@ -1,4 +1,4 @@
-from pyfunk.functors import Container
+from pyfunk.functors.container import Container
 
 
 def test_of():
