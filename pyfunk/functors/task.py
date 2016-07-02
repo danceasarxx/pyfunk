@@ -29,14 +29,21 @@ class Task(object):
     def fmap(self, fn):
         '''
         Transforms the resolved value of the task using the given function
-        @sig map :: Task a b => (b -> c) -> Task a c
+        @sig fmap :: Task a b => (b -> c) -> Task a c
         '''
         return Task(lambda rej, res: self.fork(rej, compose(res, fn)))
+
+    def rejected_fmap(self, fn):
+        '''
+        Transforms the rejected value of the task using the given function
+        @sig rejected_fmap :: Task a b => (a -> c) -> Task c b
+        '''
+        return Task(lambda rej, res: self.fork(compose(rej, fn), res))
 
     def join(self):
         '''
         Lifts a Task out of another
-        @sig join :: Task a b => Task a Task b c -> Task a c
+        @sig join :: Task a b => Task a Task a b -> Task a b
         '''
         return Task(lambda rej, res: self.fork(rej,
                     lambda x: x.fork(rej, res)))
@@ -44,14 +51,14 @@ class Task(object):
     def chain(self, fn):
         '''
         Transforms the resolved value of the Task using a function to a monad
-        @sig chain :: Task a -> (a -> Container b) -> Container b
+        @sig chain :: Task a b =>  (b -> Task c) -> Task a c
         '''
         return self.fmap(fn).join()
 
     def or_else(self, fn):
         '''
-        Helps the use of making task even when dealing with rcover
-        @sig or_else :: Task [a b] => (a -> Task [c b]) -> Task [c b]
+        Transforms a failure value into a new `Task[α, β]`. Does nothing if the
+        structure already contains a successful value.
+        @sig chain :: Task a b => (a -> Task c) -> Task c b
         '''
-        return Task(lambda rej, res: self.fork(
-                    lambda x: x.fork(rej, res), res))
+        return Task(lambda rej, res: self.fork(lambda x: fn(x).fork(rej, res), res))

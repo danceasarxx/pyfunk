@@ -18,7 +18,7 @@ class Container(object):
     def fmap(self, fn):
         '''
         Transforms the value of the container using the given function
-        @sig map :: Container a => (a -> b) -> Container b
+        @sig fmap :: Container a => (a -> b) -> Container b
         '''
         return self.of(fn(self._value))
 

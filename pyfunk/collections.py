@@ -19,17 +19,17 @@ def __filter_object(obj, fn):
 
 
 @_.curry
-def fmap(fn, f):
+def fmap(fn, arr):
     '''
     Generic function for dealing with functors(arrays, maybe).
-    @sig map :: Functor f => (a -> b) -> f a -> f b
+    @sig fmap :: Functor f => (a -> b) -> f a -> f b
     '''
-    if hasattr(f, 'fmap'):
-        return f.fmap(fn)
-    elif hasattr(f, 'keys'):
-        return __map_object(f, fn)
+    if hasattr(arr, 'fmap'):
+        return arr.fmap(fn)
+    elif hasattr(arr, 'keys'):
+        return __map_object(arr, fn)
     else:
-        return list(map(fn, f))
+        return list(map(fn, arr))
 
 
 @_.curry
@@ -37,37 +37,37 @@ def fslice(x, y, arr):
     '''
     Composable equivalent of [:]. Use None for the second argument
     for the equivalent [x:]
-    @sig slice :: (Number, Number) -> [a] -> [a]
+    @sig fslice :: (Number, Number) -> [a] -> [a]
     '''
     return arr[x:y]
 
 
 @_.curry
-def ffilter(fn, f):
+def ffilter(fn, arr):
     '''
     Composable equivalent of iterable filter function.
-    @sig filter :: (a -> Bool) -> [a] -> [a]
+    @sig ffilter :: (a -> Bool) -> [a] -> [a]
     '''
-    if hasattr(f, 'keys'):
-        return __filter_object(f, fn)
+    if hasattr(arr, 'keys'):
+        return __filter_object(arr, fn)
     else:
-        return list(filter(fn, f))
+        return list(filter(fn, arr))
 
 
 @_.curry
-def prop(str, obj):
+def prop(string, obj):
     '''
     Property access as a function
     @sig prop :: String -> Dict -> a
     '''
-    return obj.get(str)
+    return obj.get(string)
 
 
 @_.curry
 def concat(c1, c2):
     '''
     Equivalent of + for concatables(string, array)
-    @sig concat :: Concatable c => c a -> Number -> c a
+    @sig concat :: Concatable c => c a -> c a -> c a
     '''
     return c1 + c2
 
@@ -88,7 +88,7 @@ def index_of(fn, arr):
 def array_get(i, arr):
     '''
     Array access as a function.
-    @sig array_get :: [a] -> Number -> a
+    @sig array_get :: Number -> [a] ->  a
     '''
     try:
         return arr[i]
@@ -104,8 +104,8 @@ def first(fn, arr):
     '''
     return array_get(index_of(fn, arr), arr)
 
-
-# head :: [a] -> a'''
+# Get the top of array
+# head :: [a] -> a
 head = first(T)
 
 
@@ -116,8 +116,7 @@ def take_while(fn, arr):
     @sig take_while :: (a -> Bool) -> [a] -> [a]
     '''
     i = index_of(_.fnot(fn), arr)
-    i = 0 if i == -1 else i
-    return fslice(0, i, arr)
+    return fslice(0, 0 if i == -1 else i, arr)
 
 
 @_.curry
@@ -127,5 +126,4 @@ def drop_while(fn, arr):
     @sig drop_while :: (a -> Bool) -> [a] -> [a]
     '''
     i = index_of(_.fnot(fn), arr)
-    i = len(arr) if i == -1 else i
-    return fslice(i, None, arr)
+    return fslice(len(arr) if i == -1 else i, None, arr)

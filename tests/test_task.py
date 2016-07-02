@@ -22,6 +22,11 @@ def test_fmap():
     Task.of(4).fmap(lambda x: x * 2).fork(fid, assertFn(lambda x: x == 8))
 
 
+def test_rejected_fmap():
+    Task.rejected(4).rejected_fmap(lambda x: x * 2) \
+        .fork(assertFn(lambda x: x == 8), fid)
+
+
 def test_join():
     Task.of(4).fmap(lambda x: Task.of(x * 2)) \
         .join().fork(fid, assertFn(lambda x: x == 8))
@@ -32,6 +37,6 @@ def test_chain():
         .fork(fid, assertFn(lambda x: x == 6))
 
 
-def test_or_else():
-    Task.rejected(Task.of(3)).or_else(lambda x: Task.of(x * 2)) \
+def test_err_chain():
+    Task.rejected(3).or_else(lambda x: Task.rejected(x * 2)) \
         .fork(assertFn(lambda x: x == 6), fid)

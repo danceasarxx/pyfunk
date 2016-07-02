@@ -21,7 +21,7 @@ class IO(object):
     def fmap(self, fn):
         '''
         Transforms the value of the IO monad using the given function
-        @sig map :: IO a => (a -> b) -> IO b
+        @sig fmap :: IO a => (a -> b) -> IO b
         '''
         return IO(compose(fn, self.unsafeIO))
 

@@ -48,7 +48,7 @@ class Maybe(object):
     def fmap(self, fn):
         '''
         Transforms the value of the Maybe monad using the given function
-        @sig map :: Maybe a => (a -> b) -> Maybe b
+        @sig fmap :: Maybe a => (a -> b) -> Maybe b
         '''
         return Maybe.of(None) if self.nothing() \
             else Maybe.of(fn(self._value))

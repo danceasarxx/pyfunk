@@ -38,7 +38,7 @@ class Left(object):
     def fmap(self, fn):
         '''
         Does nothing
-        @sig map :: Left => (a -> b) -> Left
+        @sig fmap :: Left => (a -> b) -> Left
         '''
         return self
 
