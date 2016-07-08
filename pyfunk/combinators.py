@@ -29,3 +29,12 @@ def fnot(f):
     @sig fnot :: (* -> Bool) -> * -> Bool
     '''
     return lambda *args: not f(*args)
+
+
+@curry
+def chain(fn, f):
+    '''
+    Chains a function to a functor using its bound api
+    @sig chain :: Functor f => (a -> b) -> f a -> f b
+    '''
+    return f.chain(fn)
