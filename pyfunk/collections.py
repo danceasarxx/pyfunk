@@ -37,9 +37,18 @@ def fslice(x, y, arr):
     '''
     Composable equivalent of [:]. Use None for the second argument
     for the equivalent [x:]
-    @sig fslice :: (Number, Number) -> [a] -> [a]
+    @sig fslice :: Number -> Number -> [a] -> [a]
     '''
     return arr[x:y]
+
+
+@_.curry
+def freduce(fn, init, arr):
+    '''
+    Composable equivalent of reduce in functional tools
+    @sig freduce :: (a -> b) -> a -> [a] -> b
+    '''
+    return reduce(fn, arr, init)
 
 
 @_.curry
