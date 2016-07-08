@@ -1,4 +1,4 @@
-from functools import reduce
+from functools import reduce, wraps
 
 
 def curry(f):
@@ -6,6 +6,7 @@ def curry(f):
     Returns the curried equivalent of the given function.
     @sig curry :: * -> b -> * -> b
     '''
+    @wraps(f)
     def curried(*args):
         if len(args) == f.__code__.co_argcount:
             return f(*args)
