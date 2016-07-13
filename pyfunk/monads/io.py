@@ -1,14 +1,15 @@
+from pyfunk.monads import Monad
 from pyfunk.combinators import compose
 
 
-class IO(object):
+class IO(Monad):
 
     def __init__(self, fn):
         '''
         Create new IO Monad
         @sig a -> IO a
         '''
-        self.unsafeIO = fn
+        self.io = fn
 
     @classmethod
     def of(cls, x):
@@ -23,18 +24,11 @@ class IO(object):
         Transforms the value of the IO monad using the given function
         @sig fmap :: IO a => (a -> b) -> IO b
         '''
-        return IO(compose(fn, self.unsafeIO))
+        return IO(compose(fn, self.io))
 
     def join(self):
         '''
         Lifts an IO monad out of another
         @sig join :: IO i => i (i a) -> c a
         '''
-        return IO(lambda: self.unsafeIO().unsafeIO())
-
-    def chain(self, fn):
-        '''
-        Transforms the value of the IO monad using a function to a monad
-        @sig chain :: IO a -> (a -> IO b) -> IO b
-        '''
-        return self.fmap(fn).join()
+        return IO(lambda: self.io().io())

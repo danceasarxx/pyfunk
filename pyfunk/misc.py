@@ -6,6 +6,11 @@ def fid(a):
     return a
 
 
+def fconstant(a):
+    '''fconstant :: a -> (* -> a)'''
+    return lambda *args, **kwargs: a
+
+
 @_.curry
 def trace(tag, val):
     '''trace :: Show a => String -> a -> a'''

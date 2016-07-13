@@ -21,12 +21,10 @@ def __filter_object(obj, fn):
 @_.curry
 def fmap(fn, arr):
     '''
-    Generic function for dealing with functors(arrays, maybe).
-    @sig fmap :: Functor f => (a -> b) -> f a -> f b
+    Generic function for dealing with objects and arrays.
+    @sig fmap :: (a -> b) -> [a] -> [b]
     '''
-    if hasattr(arr, 'fmap'):
-        return arr.fmap(fn)
-    elif hasattr(arr, 'keys'):
+    if hasattr(arr, 'keys'):
         return __map_object(arr, fn)
     else:
         return list(map(fn, arr))

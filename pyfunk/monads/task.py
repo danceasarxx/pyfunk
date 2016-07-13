@@ -1,11 +1,12 @@
 from pyfunk.combinators import compose
+from pyfunk.monads import Monad
 
 
-class Task(object):
+class Task(Monad):
 
     def __init__(self, fn):
         '''
-        Create new Container
+        Create new Task
         @sig a -> Task a b
         '''
         self.fork = fn
@@ -48,13 +49,6 @@ class Task(object):
         return Task(lambda rej, res: self.fork(rej,
                     lambda x: x.fork(rej, res)))
 
-    def chain(self, fn):
-        '''
-        Transforms the resolved value of the Task using a function to a monad
-        @sig chain :: Task a b =>  (b -> Task c) -> Task a c
-        '''
-        return self.fmap(fn).join()
-
     def or_else(self, fn):
         '''
         Transforms a failure value into a new `Task[α, β]`. Does nothing if the
@@ -62,3 +56,11 @@ class Task(object):
         @sig chain :: Task a b => (a -> Task c) -> Task c b
         '''
         return Task(lambda rej, res: self.fork(lambda x: fn(x).fork(rej, res), res))
+
+    def freduce(self, fn, x):
+        '''
+        [WIP]
+        Equivalent of reduce for arrays
+        @sig freduce :: Task t => _ -> _ -> a
+        '''
+        pass

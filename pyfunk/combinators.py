@@ -7,10 +7,10 @@ def curry(f):
     @sig curry :: * -> b -> * -> b
     '''
     @wraps(f)
-    def curried(*args):
-        if len(args) == f.__code__.co_argcount:
-            return f(*args)
-        return lambda *args2: curried(*(args + args2))
+    def curried(*args, **kwargs):
+        if len(args) + len(kwargs) == f.__code__.co_argcount:
+            return f(*args, **kwargs)
+        return lambda *args2, **kwargs2: curried(*(args + args2), **dict(kwargs, **kwargs2))
     return curried
 
 
