@@ -1,3 +1,4 @@
+from pyfunk.collections import freduce
 from pyfunk.combinators import compose
 from pyfunk.monads import Monad
 
@@ -18,6 +19,36 @@ class Task(Monad):
         @sig of :: b -> Task _ b
         '''
         return Task(lambda _, resolve: resolve(x))
+
+    @classmethod
+    def all(cls, tasks):
+        '''
+        Creates a task that represents the full list
+        of tasks. It is fail-fast i.e. once a task fails
+        all tasks fail
+        @sig all :: Task t => [t a b] -> t a [b]
+        '''
+        tasks_copy = t.copy()
+        results = []
+        error = None
+
+        def rres(x):
+            results.append(x)
+
+        def rrej(e):
+            nonlocal error
+            error = e
+
+        def handle_all(rej, res):
+            while tasks_copy and error is None:
+                t = tasks_copy.pop()
+                t.fork(rrej, rres)
+            if error is not None:
+                rej(error)
+            else:
+                res(results)
+
+        return cls(handle_all)
 
     @classmethod
     def rejected(cls, x):
@@ -56,11 +87,3 @@ class Task(Monad):
         @sig chain :: Task a b => (a -> Task c) -> Task c b
         '''
         return Task(lambda rej, res: self.fork(lambda x: fn(x).fork(rej, res), res))
-
-    def freduce(self, fn, x):
-        '''
-        [WIP]
-        Equivalent of reduce for arrays
-        @sig freduce :: Task t => _ -> _ -> a
-        '''
-        pass
