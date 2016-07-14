@@ -43,10 +43,11 @@ def fslice(x, y, arr):
 @_.curry
 def freduce(fn, init, arr):
     '''
-    Composable equivalent of reduce in functional tools
+    Composable equivalent of reduce in functional tools. Pass None
+    if no init exists.
     @sig freduce :: (a -> b) -> a -> [a] -> b
     '''
-    return reduce(fn, arr, init)
+    return reduce(fn, arr, init) if init else reduce(fn, arr)
 
 
 @_.curry
