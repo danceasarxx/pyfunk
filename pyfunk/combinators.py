@@ -30,3 +30,11 @@ def fnot(f):
     @sig fnot :: (* -> Bool) -> * -> Bool
     '''
     return lambda *args: not f(*args)
+
+
+def K(a):
+    '''
+    The K combinator
+    @sig K :: a -> (* -> a)
+    '''
+    return lambda *args, **kwargs: a
