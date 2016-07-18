@@ -58,6 +58,31 @@ def liftA3(fn, f1, f2, f3):
     return f1.fmap(fn).ap(f2).ap(f3)
 
 
+def doMonad(fn):
+    '''
+    The do monad helps to run a series of serial mappings on monads to
+    remove the need for callbacks. e.g
+    @doMonad
+    def read(path):
+        xfile = yield openIO(path)
+        lines = split(xfile)
+        # chain calls use join
+        xresults = join(yield openURLs(xfiles))
+    '''
+    def init(*args, **kwargs):
+        gen = fn(*args, **kwargs)
+
+        def stepper(result):
+            try:
+                result = gen.send(result)
+            except StopIteration:
+                return result
+            else:
+                return result.fmap(stepper)
+        return stepper(None)
+    return init
+
+
 from pyfunk.monads.base import Monad  # noqa
 from pyfunk.monads.identity import Identity  # noqa
 from pyfunk.monads.const import Const  # noqa
