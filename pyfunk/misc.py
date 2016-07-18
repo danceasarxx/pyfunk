@@ -2,13 +2,20 @@ import pyfunk.combinators as _
 
 
 def fid(a):
-    '''fid :: a -> a'''
+    '''
+    The id high-order function
+    @sig fid :: a -> a
+    '''
     return a
 
 
 @_.curry
 def trace(tag, val):
-    '''trace :: Show a => String -> a -> a'''
+    '''
+    Prints a piped value to the console during a
+    composition
+    @sig trace :: Show a => String -> a -> a
+    '''
     print(tag, val)
     return val
 
