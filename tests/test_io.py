@@ -1,4 +1,4 @@
-from pyfunk.monads import IO
+from pyfunk.monads.io import IO
 
 
 def test_of():

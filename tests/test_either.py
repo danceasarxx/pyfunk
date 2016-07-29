@@ -1,4 +1,4 @@
-from pyfunk.monads import Left, Right, cata
+from pyfunk.monads.either import Left, Right, cata
 from pyfunk.misc import fid
 
 

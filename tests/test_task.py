@@ -1,4 +1,4 @@
-from pyfunk.monads import Task
+from pyfunk.monads.task import Task
 from pyfunk.misc import fid
 
 

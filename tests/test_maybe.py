@@ -1,4 +1,4 @@
-from pyfunk.monads import Maybe, maybify, maybe
+from pyfunk.monads.maybe import Maybe, maybify, maybe
 from pyfunk.misc import F
 
 

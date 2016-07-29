@@ -1,5 +1,6 @@
 from pyfunk.combinators import compose, curry
 from pyfunk.collections import fmap as cfmap
+from pyfunk.monads.base import Monad  # noqa
 
 
 @curry
@@ -81,13 +82,3 @@ def doMonad(fn):
                 return result.fmap(stepper)
         return stepper(None)
     return init
-
-
-from pyfunk.monads.base import Monad  # noqa
-from pyfunk.monads.identity import Identity  # noqa
-from pyfunk.monads.const import Const  # noqa
-from pyfunk.monads.either import Left, Right, ftry, cata  # noqa
-from pyfunk.monads.io import IO  # noqa
-from pyfunk.monads.maybe import Maybe, maybe, maybify  # noqa
-from pyfunk.monads.task import Task  # noqa
-from pyfunk.monads.state import State  # noqa

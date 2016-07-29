@@ -1,6 +1,5 @@
 from pyfunk import collections as _
-from pyfunk.monads import Maybe
-from pyfunk.misc import fid, T
+from pyfunk.misc import T
 
 
 def test_fmap():
