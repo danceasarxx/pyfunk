@@ -72,3 +72,27 @@ def test_take_while():
 def test_drop_while():
     assert len(_.drop_while(lambda x: x < 3, [1, 2, 3, 4, 5, 6])) == 4
     assert len(_.drop_while(lambda x: x < 8, [1, 2, 3, 4, 5])) == 0
+
+
+def test_tail():
+    assert len(_.tail([1, 2, 3, 4, 5])) == 4
+    assert _.tail([1, 2, 3, 4, 5])[0] == 2
+
+
+def test_body():
+    assert len(_.body([1, 2, 3, 4, 5])) == 4
+    assert _.body([1, 2, 3, 4, 5])[0] == 1
+
+
+def test_last():
+    assert _.last([1, 2, 3]) == 3
+
+
+def test_fzip():
+    val = _.fzip([('age', 12), ('level', 500)])
+    assert isinstance(val, dict)
+    assert val['age'] == 12
+
+
+def test_flatten():
+    assert len(_.flatten([[1, 2], [3, 4]])) == 4

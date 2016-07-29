@@ -112,9 +112,12 @@ def first(fn, arr):
     '''
     return array_get(index_of(fn, arr), arr)
 
-# Get the top of array
-# head :: [a] -> a
+
 head = first(T)
+head.__doc__ = '''
+Get the top of an array
+@sig head :: [a] -> a
+'''
 
 
 @_.curry
@@ -135,3 +138,42 @@ def drop_while(fn, arr):
     '''
     i = index_of(_.fnot(fn), arr)
     return fslice(len(arr) if i == -1 else i, None, arr)
+
+def tail(ls):
+    '''
+    Get every element in the list except for the head
+    @sig tail :: [a] -> [a]
+    '''
+    return ls[1:]
+
+
+def body(ls):
+    '''
+    Get every element in the list except the last one.
+    @sig body ::  [a] -> [a]
+    '''
+    return ls[:-1]
+
+
+def last(ls):
+    '''
+    Get the element at the end of the list
+    @sig last :: [a] -> a
+    '''
+    return ls[-1:].pop()
+
+
+def fzip(items):
+    '''
+    Create a map from the list of tuples.
+    @sig fzip :: [(Str, (* -> a))] -> Dict (* -> a)
+    '''
+    return {x: y for x, y in items}
+
+
+def flatten(listoflists):
+    '''
+    Flattens an array of arrays one level deep
+    @sig flatten :: [[a]] -> [a]
+    '''
+    return freduce(concat, [], listoflists)
