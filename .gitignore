@@ -6,6 +6,8 @@
 .anaconda
 pyfunk.sublime-*
 .projectile
+.emacs.desktop
+.emacs.desktop.lock
 
 # Builds
 .cache
