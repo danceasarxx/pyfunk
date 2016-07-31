@@ -168,7 +168,7 @@ def fzip(items):
     Create a map from the list of tuples.
     @sig fzip :: [(Str, (* -> a))] -> Dict (* -> a)
     '''
-    return {x: y for x, y in items}
+    return dict(items)
 
 
 def flatten(listoflists):

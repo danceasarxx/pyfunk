@@ -5,6 +5,7 @@
 .python-version
 .anaconda
 pyfunk.sublime-*
+.projectile
 
 # Builds
 .cache
