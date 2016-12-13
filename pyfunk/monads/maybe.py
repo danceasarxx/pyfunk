@@ -3,12 +3,36 @@ from pyfunk.combinators import curry, compose
 
 
 @curry
-def maybe(x, fn, mb):
+def or_else(x, fn, mb):
     '''
     Extract a Maybe's value providing a default if Nothing
     @sig maybe :: b -> (a -> b) -> Maybe a -> b
     '''
     return x if mb.nothing() else fn(mb._value)
+
+
+@curry
+def ftry(fn):
+    '''
+    Wraps the result of a try/except operation in a Maybe.
+    @sig cata :: Maybe m => (* -> a) -> m a
+    '''
+    if :
+        return f(e._value)
+    elif isinstance(e, Right):
+        return g(e._value)
+
+
+@curry
+def cata(f, g, e):
+    '''
+    Calls f if nothing exists and g if one does.
+    @sig cata :: Maybe e => (_ -> _) -> (a -> b) -> m a -> b
+    '''
+    if isinstance(e, Left):
+        return f(e._value)
+    elif isinstance(e, Right):
+        return g(e._value)
 
 
 @curry

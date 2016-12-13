@@ -18,9 +18,9 @@ def ftry(fn):
 @curry
 def cata(f, g, e):
     '''
-    Extracts the values from either for transformation there f is for
+    Extracts the values from either for transformation using f is for
     Left and g for Right
-    @sig cata :: Either a b => (a -> c) -> (b -> c) -> Either a b -> c
+    @sig cata :: Either e => (a -> c) -> (b -> d) -> e a b -> d
     '''
     if isinstance(e, Left):
         return f(e._value)

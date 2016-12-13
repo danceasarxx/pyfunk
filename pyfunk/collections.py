@@ -139,6 +139,7 @@ def drop_while(fn, arr):
     i = index_of(_.fnot(fn), arr)
     return fslice(len(arr) if i == -1 else i, None, arr)
 
+
 def tail(ls):
     '''
     Get every element in the list except for the head
