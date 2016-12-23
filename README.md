@@ -9,7 +9,7 @@ from pyfunk.functors.io import IO
 
 
 def get_file(filename):
-    '''@sig get_file :: String -> IO String '''
+    """@sig get_file :: String -> IO String """
     def open_file():
         with open(filename) as f:
             return f.read()

@@ -1,13 +1,13 @@
+from pyfunk import combinators as comb
 from pyfunk.monads import Monad
-from pyfunk.combinators import curry
 
 
-@curry
+@comb.curry
 def add(x, y):
     return x + y
 
 
-@curry
+@comb.curry
 def add3(x, y, z):
     return x + y + z
 
@@ -38,4 +38,5 @@ def test_liftA2():
 
 
 def test_liftA3():
-    assert Monad.of(add3).liftA3(Monad.of(4), Monad.of(4), Monad.of(4))._value == 12
+    assert Monad.of(add3).liftA3(
+        Monad.of(4), Monad.of(4), Monad.of(4))._value == 12

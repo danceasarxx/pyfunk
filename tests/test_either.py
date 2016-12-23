@@ -1,4 +1,5 @@
-from pyfunk.monads.either import Left, Right, cata
+from pyfunk.monads import either
+from pyfunk.monads.either import Left, Right
 from pyfunk.misc import fid
 
 
@@ -29,7 +30,17 @@ def test_chain():
 
 def test_either():
     g1 = getT(3)
-    assert cata(fid, lambda x: x/2, g1) == 'Must be more than 10'
+    assert either.cata(fid, lambda x: x/2, g1) == 'Must be more than 10'
 
     g2 = getT(11)
-    assert cata(lambda x: x * 2, lambda x:  x/2, g2) == 11
+    assert either.cata(lambda x: x * 2, lambda x:  x/2, g2) == 11
+
+
+def error():
+    raise Exception()
+
+
+def test_ftry():
+    assert isinstance(either.ftry(error)(), Left)
+    assert isinstance(either.ftry(lambda: 3)(), Right)
+    assert either.ftry(lambda: 3)()._value == 3

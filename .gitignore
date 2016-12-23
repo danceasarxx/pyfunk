@@ -14,3 +14,6 @@ pyfunk.sublime-*
 *.egg-info
 dist/
 build/
+
+# Testing
+*,cover

@@ -6,9 +6,9 @@ from setuptools import setup, find_packages
 dependencies = parse_requirements('requirements.txt', session=False)
 reqs = [str(ir.req) for ir in dependencies]
 setup(
-    name='gakp-pyfunk',
-    version='0.4.1',
-    url='https://gitlab.com/danceasarxx/gakp-pyfunc.git',
+    name='pyfunk',
+    version='1.0.0',
+    url='https://github.com/danceasarxx/pyfunk.git',
     author='Arewa Olakunle',
     author_email='arewa.olakunle@gmail.com',
     packages=find_packages(),

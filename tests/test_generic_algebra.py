@@ -1,6 +1,6 @@
 from pyfunk.monads import (
     fmap, chain,
-    ccompose, ap, liftA2,
+    chaincompose, ap, liftA2,
     liftA3, Monad
 )
 from pyfunk.combinators import compose, curry
@@ -26,8 +26,8 @@ def test_chain():
     assert x(4)._value == 8
 
 
-def test_ccompose():
-    x = ccompose(lambda x: Monad.of(x * 2), Monad.of)
+def test_chaincompose():
+    x = chaincompose(lambda x: Monad.of(x * 2), Monad.of)
     assert x(4)._value == 8
 
 
