@@ -27,6 +27,14 @@ def test_curry():
     assert add3(1)(2)(3) == 6
 
 
+def test_curry_r():
+    add3 = _.curry_r(lambda a, b, c: a + b + c)
+    assert add3('A', 'B', 'C') == 'ABC'
+    assert add3('B', 'C')('A') == 'ABC'
+    assert add3('C')('A', 'B') == 'ABC'
+    assert add3('C')('B')('A') == 'ABC'
+
+
 def test_fnot():
     twist = _.fnot(T)
     assert twist() is False

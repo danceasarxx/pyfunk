@@ -1,4 +1,4 @@
-from functools import reduce, wraps
+import functools as func
 
 
 def arg_n(f):
@@ -15,7 +15,7 @@ def multi_args(f):
     it, where n is the number of arguments in f
     @sig multi_args :: (* -> a) -> (* -> a)
     """
-    return wraps(f)(lambda *args: f(args[:arg_n(f)]))
+    return func.wraps(f)(lambda *args: f(args[:arg_n(f)]))
 
 
 def curry(f):
@@ -24,11 +24,27 @@ def curry(f):
     with keyword arguments.
     @sig curry :: * -> b -> * -> b
     """
-    @wraps(f)
+    @func.wraps(f)
     def curried(*args):
         if len(args) == arg_n(f):
             return f(*args)
         return lambda *args2: curried(*(args + args2))
+    return curried
+
+
+def curry_r(f):
+    """
+    Works exactly like curry except this time it appends the arguments from
+    the back i.e f :: (a -> b -> c) called with f(b, c) then f(a) will still
+    be the same as f(a, b, c). This helps to support data first functions
+    when currying.
+    @sig curry_r :: * -> b -> * -> b
+    """
+    @func.wraps(f)
+    def curried(*args):
+        if len(args) == arg_n(f):
+            return f(*args)
+        return lambda *args2: curried(*(args2 + args))
     return curried
 
 
@@ -38,8 +54,8 @@ def compose(*fns):
     have any arity, the remaining functions must be unary.
     @sig compose :: (b -> c)...(* -> b) -> (* -> c)
     """
-    return reduce(lambda f, g:
-                  lambda *args: f(g(*args)), fns)
+    return func.reduce(lambda f, g:
+                       lambda *args: f(g(*args)), fns)
 
 
 def compose_v(*fns):
